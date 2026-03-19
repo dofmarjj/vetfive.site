@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vetfive - Ветеринарна клініка</title>
+    <meta
+      name="description"
+      content="Ветеринарна клініка Vetfive. Професійна допомога вашим улюбленцям: консультації, лікування, діагностика та хірургія." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="preloader-active">
+    <a class="skip-link" href="#main">Перейти до контенту</a>
+
+    <div
+      id="preloader"
+      class="preloader"
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+      aria-label="Завантаження сторінки">
+      <div class="preloader__inner">
+        <img
+          class="preloader__logo"
+          src="assets/logo-1.png"
+          alt=""
+          width="72"
+          height="72"
+          decoding="async" />
+        <p class="preloader__title">Vetfive</p>
+        <p class="preloader__hint">Ветеринарна клініка</p>
+        <div class="preloader__track" aria-hidden="true">
+          <div class="preloader__bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <header class="site-header">
+      <div class="container header-inner header-inner--relative">
+        <a class="brand" href="index.html">
+          <span class="brand-mark" aria-hidden="true">V</span>
+          <span class="brand-title">Vetfive</span>
+        </a>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-controls="site-nav"
+          aria-expanded="false">
+          <span class="nav-toggle-icon" aria-hidden="true">☰</span>
+          <span class="nav-toggle-label">Меню</span>
+        </button>
+
+        <nav id="site-nav" class="nav" aria-label="Головна навігація">
+          <a href="#about">Про нас</a>
+          <a href="#services">Послуги</a>
+          <a href="#doctors">Лікарі</a>
+          <a href="#contact">Контакти</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- HERO (Variant A) -->
+      <section class="hero hero--a" data-hero-variant="a">
+        <div class="container hero-shell">
+          <div class="hero-panel">
+            <div class="hero-panel-glow" aria-hidden="true"></div>
+            <div class="hero-inner hero-inner--text-first">
+              <div class="hero-content">
+                <div class="hero-kicker">Ветеринарна клініка</div>
+                <h1 class="hero-title">
+                  Vetfive — коли турбота має характер професіоналів
+                </h1>
+                <p class="hero-subtitle">
+                  Лікуємо, консультуємо та допомагаємо вашим улюбленцям швидше
+                  відновлюватися. Діагностика, терапія, хірургія та супровід під
+                  час лікування.
+                </p>
+
+                <ul class="hero-bullets">
+                  <li>Аналізи та діагностика</li>
+                  <li>Лікування та спостереження</li>
+                  <li>Хірургічні втручання</li>
+                </ul>
+
+                <div class="hero-actions">
+                  <a class="btn btn-primary" href="#contact"
+                    >Записатися на прийом</a
+                  >
+                  <a class="btn btn-ghost" href="#doctors"
+                    >Знайомимось із лікарями</a
+                  >
+                </div>
+              </div>
+
+              <div class="hero-ornament" aria-hidden="true">
+                <div class="hero-orbit hero-orbit--outer"></div>
+                <div class="hero-orbit hero-orbit--inner"></div>
+                <div class="hero-orbit-accent"></div>
+                <div class="hero-orbit-dot hero-orbit-dot--a"></div>
+                <div class="hero-orbit-dot hero-orbit-dot--b"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HERO (Variant B) -->
+      <section class="hero hero--b" data-hero-variant="b" hidden>
+        <div class="container hero-shell hero-shell--b">
+          <div class="hero-panel hero-panel--light">
+            <div class="hero-inner hero-inner--visual-first">
+              <div
+                class="hero-ornament hero-ornament--light"
+                aria-hidden="true">
+                <div class="hero-orbit hero-orbit--outer"></div>
+                <div class="hero-orbit hero-orbit--inner"></div>
+                <div class="hero-orbit-accent"></div>
+                <div class="hero-orbit-dot hero-orbit-dot--a"></div>
+                <div class="hero-orbit-dot hero-orbit-dot--b"></div>
+              </div>
+
+              <div class="hero-content">
+                <div class="hero-kicker hero-kicker--gold">
+                  Ветеринарна допомога
+                </div>
+                <h1 class="hero-title">
+                  Підтримуємо здоров’я котиків та песиків — уважно, тактовно,
+                  сучасно
+                </h1>
+                <p class="hero-subtitle">
+                  У Vetfive ми пояснюємо план лікування простими словами, даємо
+                  рекомендації та допомагаємо тримати процес під контролем.
+                </p>
+
+                <div class="hero-metrics">
+                  <div class="metric">
+                    <div class="metric-value">24/7</div>
+                    <div class="metric-label">консультації онлайн*</div>
+                  </div>
+                  <div class="metric">
+                    <div class="metric-value">Комплекс</div>
+                    <div class="metric-label">діагностика + лікування</div>
+                  </div>
+                </div>
+
+                <div class="hero-actions">
+                  <a class="btn btn-primary" href="#contact"
+                    >Зв’язатися з клінікою</a
+                  >
+                  <a class="btn btn-ghost" href="#about">Про клініку</a>
+                </div>
+
+                <p class="hero-note">
+                  *Уточніть графік та доступність сервісів за
+                  телефоном/месенджером.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">Про клініку</span>
+            <h2>Про нас</h2>
+            <p>
+              Vetfive — це команда, яка ставиться до тварин як до членів родини.
+              Ми поєднуємо сучасний підхід у діагностиці та лікуванні з людською
+              турботою.
+            </p>
+          </div>
+
+          <div class="about-grid">
+            <article class="info-card">
+              <h3>Ми підбираємо план лікування</h3>
+              <p>
+                Пояснюємо причину проблеми, розкладаємо етапи лікування та
+                погоджуємо дії з вами.
+              </p>
+            </article>
+            <article class="info-card">
+              <h3>Діагностика та контроль</h3>
+              <p>
+                Робимо обстеження по показаннях, стежимо за динамікою та
+                коригуємо рекомендації.
+              </p>
+            </article>
+            <article class="info-card">
+              <h3>Бережний сервіс</h3>
+              <p>
+                Акуратна комунікація, зрозумілі інструкції та турбота про
+                комфорт під час візиту.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" class="section section--alt">
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">Напрями</span>
+            <h2>Послуги клініки</h2>
+            <p>
+              Комплексна ветеринарна допомога для котів і собак: від
+              профілактики до складної діагностики та лікування. Нижче — основні
+              напрями; повний перелік і деталі — на окремій сторінці.
+            </p>
+          </div>
+
+          <div class="services-preview-grid">
+            <article class="service-card">
+              <span class="service-card__icon" aria-hidden="true">Т</span>
+              <h3>Терапія та консультації</h3>
+              <p>
+                Прийом за симптомами, підбір терапії, спостереження за
+                хронічними станами, супровід після виписки.
+              </p>
+            </article>
+            <article class="service-card">
+              <span class="service-card__icon" aria-hidden="true">Х</span>
+              <h3>Хірургія</h3>
+              <p>
+                Планові та ургентні втручання, підготовка до операції, анестезія
+                та післяопераційний догляд за призначенням лікаря.
+              </p>
+            </article>
+            <article class="service-card">
+              <span class="service-card__icon" aria-hidden="true">Д</span>
+              <h3>Діагностика</h3>
+              <p>
+                УЗД, рентгенологія, лабораторні дослідження та інтерпретація
+                результатів для уточнення діагнозу.
+              </p>
+            </article>
+            <article class="service-card">
+              <span class="service-card__icon" aria-hidden="true">У</span>
+              <h3>Стоматологія</h3>
+              <p>
+                Огляд порожнини рота, професійна гігієна, видалення зубів за
+                показаннями, рекомендації з догляду.
+              </p>
+            </article>
+            <article class="service-card">
+              <span class="service-card__icon" aria-hidden="true">В</span>
+              <h3>Вакцинація та профілактика</h3>
+              <p>
+                Щеплення за календарем, чіпування, обробка від паразитів, базові
+                wellness-огляди та поради з раціону.
+              </p>
+            </article>
+            <article class="service-card">
+              <span class="service-card__icon" aria-hidden="true">С</span>
+              <h3>Стаціонар і нагляд</h3>
+              <p>
+                Перебування в клініці після процедур або за показаннями для
+                інфузій, спостереження та контролю стану.
+              </p>
+            </article>
+          </div>
+
+          <div class="services-preview-actions">
+            <a class="btn btn-primary" href="poslugy.html"
+              >Усі послуги — повний перелік</a
+            >
+            <p class="services-preview-note">
+              Вартість і доступність окремих процедур уточнюйте в адміністратора
+              або через форму запису.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="doctors" class="section">
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">Команда</span>
+            <h2>Лікарі</h2>
+            <p>
+              Наші фахівці спеціалізуються на терапії, хірургії та діагностиці.
+              Натисніть картку, щоб відкрити повний профіль лікаря.
+            </p>
+          </div>
+
+          <div class="doctors-grid">
+            <a
+              class="doctor-card doctor-card--link"
+              href="doctors/olena-ivanenko.html">
+              <div class="doctor-avatar" aria-hidden="true">ОІ</div>
+              <div class="doctor-name">Олена Іваненко</div>
+              <div class="doctor-role">Ветеринарний лікар • терапія</div>
+              <p class="doctor-desc">
+                Лікування захворювань, контроль стану та супровід.
+              </p>
+              <span class="doctor-card-more"
+                >Повна інформація <span aria-hidden="true">→</span></span
+              >
+            </a>
+            <a
+              class="doctor-card doctor-card--link"
+              href="doctors/mykola-palamarchuk.html">
+              <div class="doctor-avatar" aria-hidden="true">МП</div>
+              <div class="doctor-name">Микола Паламарчук</div>
+              <div class="doctor-role">Ветеринарний лікар • хірургія</div>
+              <p class="doctor-desc">
+                Планування та проведення операцій, післяопераційний догляд.
+              </p>
+              <span class="doctor-card-more"
+                >Повна інформація <span aria-hidden="true">→</span></span
+              >
+            </a>
+            <a
+              class="doctor-card doctor-card--link"
+              href="doctors/kateryna-avramenko.html">
+              <div class="doctor-avatar" aria-hidden="true">КА</div>
+              <div class="doctor-name">Катерина Авраменко</div>
+              <div class="doctor-role">Ветеринарний лікар • діагностика</div>
+              <p class="doctor-desc">
+                УЗД, лабораторні обстеження, інтерпретація результатів.
+              </p>
+              <span class="doctor-card-more"
+                >Повна інформація <span aria-hidden="true">→</span></span
+              >
+            </a>
+            <a
+              class="doctor-card doctor-card--link"
+              href="doctors/sofiya-vlasenko.html">
+              <div class="doctor-avatar" aria-hidden="true">СВ</div>
+              <div class="doctor-name">Софія Власенко</div>
+              <div class="doctor-role">Ветеринарний лікар • профілактика</div>
+              <p class="doctor-desc">
+                Вакцинації, рекомендації з харчування та догляду.
+              </p>
+              <span class="doctor-card-more"
+                >Повна інформація <span aria-hidden="true">→</span></span
+              >
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section">
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">Зв’язок</span>
+            <h2>Контакти</h2>
+            <p>
+              Напишіть або зателефонуйте — ми підкажемо, як підготуватися до
+              візиту і запишемо на прийом.
+            </p>
+          </div>
+
+          <div class="contact-grid">
+            <div class="contact-card">
+              <h3>Зв’язатися</h3>
+              <div class="contact-item">
+                <div class="contact-label">Телефон</div>
+                <a class="contact-link" href="tel:+380000000000"
+                  >+38 (000) 000-00-00</a
+                >
+              </div>
+              <div class="contact-item">
+                <div class="contact-label">Email</div>
+                <a class="contact-link" href="mailto:info@vetfive.ua"
+                  >info@vetfive.ua</a
+                >
+              </div>
+              <div class="contact-item">
+                <div class="contact-label">Графік</div>
+                <div>Пн–Сб: 09:00–19:00 • Нд: вихідний</div>
+              </div>
+              <div class="contact-actions">
+                <a class="btn btn-primary" href="#contact-form"
+                  >Заявка на запис</a
+                >
+                <a class="btn btn-ghost" href="#map">Побачити на мапі</a>
+              </div>
+            </div>
+
+            <div class="contact-card contact-card--form" id="contact-form">
+              <h3>Швидка заявка</h3>
+              <form class="form" action="#" method="post">
+                <label class="field">
+                  <span class="field-label">Ваше ім’я</span>
+                  <input
+                    name="name"
+                    type="text"
+                    placeholder="Напр., Оксана"
+                    autocomplete="name"
+                    required />
+                </label>
+                <label class="field">
+                  <span class="field-label">Телефон</span>
+                  <input
+                    name="phone"
+                    type="tel"
+                    placeholder="+38 (___) ___-__-__"
+                    autocomplete="tel"
+                    required />
+                </label>
+                <label class="field">
+                  <span class="field-label">Кого турбує?</span>
+                  <input
+                    name="pet"
+                    type="text"
+                    placeholder="Кіт / Пес, вік, симптоми"
+                    required />
+                </label>
+                <label class="field">
+                  <span class="field-label">Зручний день/час</span>
+                  <input
+                    name="time"
+                    type="text"
+                    placeholder="Напр., Пн після 15:00" />
+                </label>
+                <button class="btn btn-primary btn-full" type="submit">
+                  Надіслати
+                </button>
+                <p class="form-note">
+                  Заповніть дані, щоб ми могли зв’язатися з вами та уточнити
+                  деталі.
+                </p>
+              </form>
+            </div>
+
+            <div class="contact-map" id="map">
+              <h3>Місце</h3>
+              <div class="map-wrap">
+                <iframe
+                  title="Мапа Vetfive"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  src="https://www.google.com/maps?q=%D0%9A%D0%B8%D1%97%D0%B2%2C%20%D0%9F%D1%80%D0%B8%D0%BA%D0%BB%D0%B0%D0%B4%20%D0%B2%D1%83%D0%BB%D0%B8%D1%86%D1%8F&output=embed"></iframe>
+              </div>
+              <p class="map-note">
+                Адресу підставимо після узгодження. Поки що відкриваємо приклад
+                для розташування.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-left">
+          <div class="footer-brand">
+            <img src="assets/logo-1.png" alt="Vetfive" width="44" height="44" />
+            <div>
+              <div class="footer-title">Vetfive</div>
+              <div class="footer-subtitle">Ветеринарна клініка</div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-right">
+          <a href="#about">Про нас</a>
+          <a href="poslugy.html">Послуги</a>
+          <a href="#doctors">Лікарі</a>
+          <a href="#contact">Контакти</a>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <span>© <span id="year"></span> Vetfive. Усі права захищено.</span>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
