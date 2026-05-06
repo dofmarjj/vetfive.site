@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Адмін-панель | Vetfive</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Адмінка</span>
+          <h1>Панель керування</h1>
+          <p>
+            Ви увійшли як <strong><%= user.email %></strong> (<%= user.role %>).
+          </p>
+          <form action="/admin/logout" method="post">
+            <button class="btn btn-ghost" type="submit">Вийти</button>
+          </form>
+        </div>
+
+        <section class="section section--alt">
+          <div class="section-head">
+            <h2>Тексти сайту</h2>
+          </div>
+          <div class="contact-card contact-card--form">
+            <form class="form" action="/admin/content" method="post">
+              <% Object.entries(content).forEach(([key, value]) => { %>
+              <label class="field">
+                <span class="field-label"><%= key %></span>
+                <% if ((value || "").length > 90) { %>
+                <textarea name="<%= key %>" rows="3"><%= value %></textarea>
+                <% } else { %>
+                <input name="<%= key %>" type="text" value="<%= value %>" />
+                <% } %>
+              </label>
+              <% }) %>
+              <button class="btn btn-primary" type="submit">Зберегти тексти</button>
+            </form>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>Логотип та медіа</h2>
+          </div>
+          <div class="contact-card">
+            <p>Поточний логотип:</p>
+            <img src="<%= media.logo %>" alt="Logo" width="64" height="64" />
+            <form class="form" action="/admin/media/logo" method="post" enctype="multipart/form-data">
+              <label class="field">
+                <span class="field-label">Новий логотип</span>
+                <input name="logo" type="file" accept="image/*" required />
+              </label>
+              <button class="btn btn-primary" type="submit">Замінити логотип</button>
+            </form>
+          </div>
+        </section>
+
+        <section class="section section--alt">
+          <div class="section-head">
+            <h2>Лікарі</h2>
+          </div>
+          <div class="contact-card contact-card--form">
+            <h3>Додати лікаря</h3>
+            <form class="form" action="/admin/doctors" method="post">
+              <label class="field"><span class="field-label">ПІБ</span><input name="full_name" required /></label>
+              <label class="field"><span class="field-label">Slug (опц.)</span><input name="slug" /></label>
+              <label class="field"><span class="field-label">Роль</span><input name="doctor_role" required /></label>
+              <label class="field"><span class="field-label">Ініціали</span><input name="avatar_initials" required /></label>
+              <label class="field"><span class="field-label">Короткий опис</span><textarea name="short_description" rows="2" required></textarea></label>
+              <label class="field"><span class="field-label">Про фахівця</span><textarea name="about_text" rows="3" required></textarea></label>
+              <label class="field"><span class="field-label">Освіта/досвід</span><textarea name="education_text" rows="3" required></textarea></label>
+              <label class="field"><span class="field-label">Напрями</span><textarea name="focus_text" rows="3" required></textarea></label>
+              <label class="field"><span class="field-label">Прийом</span><textarea name="reception_text" rows="2" required></textarea></label>
+              <label class="field"><span class="field-label">Meta title</span><input name="meta_title" /></label>
+              <label class="field"><span class="field-label">Meta description</span><textarea name="meta_description" rows="2"></textarea></label>
+              <label class="field"><input name="is_published" type="checkbox" checked /> Опублікувати</label>
+              <button class="btn btn-primary" type="submit">Створити</button>
+            </form>
+          </div>
+
+          <% doctors.forEach((doctor) => { %>
+          <div class="contact-card contact-card--form" style="margin-top: 16px">
+            <h3><%= doctor.full_name %> (<%= doctor.slug %>)</h3>
+            <form class="form" action="/admin/doctors/<%= doctor.id %>" method="post">
+              <label class="field"><span class="field-label">ПІБ</span><input name="full_name" value="<%= doctor.full_name %>" required /></label>
+              <label class="field"><span class="field-label">Slug</span><input name="slug" value="<%= doctor.slug %>" required /></label>
+              <label class="field"><span class="field-label">Роль</span><input name="doctor_role" value="<%= doctor.doctor_role %>" required /></label>
+              <label class="field"><input name="is_published" type="checkbox" <%= doctor.is_published ? "checked" : "" %> /> Опубліковано</label>
+              <button class="btn btn-ghost" type="submit">Оновити</button>
+            </form>
+          </div>
+          <% }) %>
+        </section>
+
+        <% if (user.role === "owner") { %>
+        <section class="section">
+          <div class="section-head">
+            <h2>Користувачі (Owner only)</h2>
+          </div>
+          <div class="contact-card contact-card--form">
+            <h3>Додати адміністратора</h3>
+            <form class="form" action="/admin/users" method="post">
+              <label class="field"><span class="field-label">Email</span><input name="email" type="email" required /></label>
+              <label class="field"><span class="field-label">Пароль</span><input name="password" type="password" required /></label>
+              <label class="field">
+                <span class="field-label">Роль</span>
+                <select name="role">
+                  <option value="editor">editor</option>
+                  <option value="owner">owner</option>
+                </select>
+              </label>
+              <button class="btn btn-primary" type="submit">Створити користувача</button>
+            </form>
+          </div>
+          <div class="contact-card">
+            <h3>Поточні користувачі</h3>
+            <% users.forEach((u) => { %>
+            <p><strong><%= u.email %></strong> — <%= u.role %></p>
+            <% }) %>
+          </div>
+        </section>
+        <% } %>
+      </div>
+    </main>
+  </body>
+</html>

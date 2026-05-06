@@ -19,3 +19,7 @@ node_modules/
 # Env / secrets (на майбутнє)
 .env
 .env.local
+
+# Runtime data
+data/
+uploads/

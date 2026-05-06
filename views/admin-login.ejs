@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Вхід в адмінку | Vetfive</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="section">
+      <div class="container" style="max-width: 520px">
+        <div class="contact-card contact-card--form">
+          <h1>Вхід в адмін-панель</h1>
+          <% if (error) { %>
+          <p style="color: #b3261e"><%= error %></p>
+          <% } %>
+          <form class="form" action="/admin/login" method="post">
+            <label class="field">
+              <span class="field-label">Email</span>
+              <input name="email" type="email" required />
+            </label>
+            <label class="field">
+              <span class="field-label">Пароль</span>
+              <input name="password" type="password" required />
+            </label>
+            <button class="btn btn-primary btn-full" type="submit">Увійти</button>
+          </form>
+          <p class="form-note">
+            Стартовий логін: owner@vetfive.local / vetfive123
+          </p>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= doctor.meta_title || `${doctor.full_name} | Vetfive` %></title>
+    <meta name="description" content="<%= doctor.meta_description || doctor.short_description %>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="preloader-active">
+    <a class="skip-link" href="#main">Перейти до контенту</a>
+    <div id="preloader" class="preloader">
+      <div class="preloader__inner">
+        <img class="preloader__logo" src="<%= media.logo %>" alt="" width="72" height="72" />
+        <p class="preloader__title">Vetfive</p>
+      </div>
+    </div>
+
+    <header class="site-header">
+      <div class="container header-inner header-inner--relative">
+        <a class="brand" href="/"><span class="brand-mark">V</span><span class="brand-title">Vetfive</span></a>
+      </div>
+    </header>
+
+    <main id="main" class="profile-page">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Навігація по сайту">
+          <a href="/">Головна</a><span class="breadcrumb-sep" aria-hidden="true">/</span><a href="/#doctors">Лікарі</a><span class="breadcrumb-sep" aria-hidden="true">/</span><span class="breadcrumb-current"><%= doctor.full_name %></span>
+        </nav>
+        <div class="profile-layout">
+          <aside class="profile-aside">
+            <div class="profile-avatar" aria-hidden="true"><%= doctor.avatar_initials %></div>
+            <h1 class="profile-name"><%= doctor.full_name %></h1>
+            <p class="profile-role"><%= doctor.doctor_role %></p>
+            <a class="btn btn-primary profile-cta" href="/#contact">Записатися на прийом</a>
+            <a class="profile-back" href="/#doctors">← Усі лікарі</a>
+          </aside>
+          <div class="profile-content">
+            <section><h2>Про фахівця</h2><p><%= doctor.about_text %></p></section>
+            <section><h2>Освіта та досвід</h2><p><%= doctor.education_text %></p></section>
+            <section><h2>Напрями роботи</h2><p><%= doctor.focus_text %></p></section>
+            <section><h2>Прийом</h2><p><%= doctor.reception_text %></p></section>
+            <div class="profile-related">
+              <h2>Інші фахівці</h2>
+              <div class="profile-related-list">
+                <% related.forEach((d) => { %>
+                <a href="/doctors/<%= d.slug %>"><%= d.full_name %></a>
+                <% }) %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-bottom">
+        <span>© <span id="year"></span> Vetfive. Усі права захищено.</span>
+      </div>
+    </footer>
+    <script src="/script.js"></script>
+  </body>
+</html>

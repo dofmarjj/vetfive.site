@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= content.site_name %> - Ветеринарна клініка</title>
+    <meta name="description" content="<%= content.hero_subtitle %>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="preloader-active">
+    <a class="skip-link" href="#main">Перейти до контенту</a>
+    <div id="preloader" class="preloader" role="status" aria-live="polite" aria-busy="true">
+      <div class="preloader__inner">
+        <img class="preloader__logo" src="<%= media.logo %>" alt="" width="72" height="72" decoding="async" />
+        <p class="preloader__title"><%= content.site_name %></p>
+        <p class="preloader__hint"><%= content.footer_subtitle %></p>
+        <div class="preloader__track" aria-hidden="true"><div class="preloader__bar"></div></div>
+      </div>
+    </div>
+
+    <header class="site-header">
+      <div class="container header-inner header-inner--relative">
+        <a class="brand" href="/"><span class="brand-mark">V</span><span class="brand-title"><%= content.site_name %></span></a>
+        <nav id="site-nav" class="nav" aria-label="Головна навігація">
+          <a href="#about">Про нас</a><a href="#doctors">Лікарі</a><a href="#contact">Контакти</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero hero--a">
+        <div class="container hero-shell">
+          <div class="hero-panel">
+            <div class="hero-inner hero-inner--text-first">
+              <div class="hero-content">
+                <div class="hero-kicker"><%= content.hero_kicker %></div>
+                <h1 class="hero-title"><%= content.hero_title %></h1>
+                <p class="hero-subtitle"><%= content.hero_subtitle %></p>
+                <div class="hero-actions">
+                  <a class="btn btn-primary" href="#contact">Записатися на прийом</a>
+                  <a class="btn btn-ghost" href="#doctors">Знайомимось із лікарями</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">Про клініку</span>
+            <h2><%= content.about_title %></h2>
+            <p><%= content.about_text %></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="doctors" class="section">
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">Команда</span>
+            <h2>Лікарі</h2>
+            <p>Натисніть картку, щоб відкрити повний профіль лікаря.</p>
+          </div>
+          <div class="doctors-grid">
+            <% doctors.forEach((doctor) => { %>
+            <a class="doctor-card doctor-card--link" href="/doctors/<%= doctor.slug %>">
+              <div class="doctor-avatar"><%= doctor.avatar_initials %></div>
+              <div class="doctor-name"><%= doctor.full_name %></div>
+              <div class="doctor-role"><%= doctor.doctor_role %></div>
+              <p class="doctor-desc"><%= doctor.short_description %></p>
+              <span class="doctor-card-more">Повна інформація <span aria-hidden="true">→</span></span>
+            </a>
+            <% }) %>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section">
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">Зв’язок</span>
+            <h2>Контакти</h2>
+          </div>
+          <div class="contact-grid">
+            <div class="contact-card">
+              <h3>Зв’язатися</h3>
+              <div class="contact-item"><div class="contact-label">Телефон</div><a class="contact-link" href="tel:<%= content.contacts_phone_link %>"><%= content.contacts_phone %></a></div>
+              <div class="contact-item"><div class="contact-label">Email</div><a class="contact-link" href="mailto:<%= content.contacts_email %>"><%= content.contacts_email %></a></div>
+              <div class="contact-item"><div class="contact-label">Графік</div><div><%= content.contacts_hours %></div></div>
+            </div>
+            <div class="contact-map" id="map">
+              <h3>Місце</h3>
+              <div class="map-wrap"><iframe title="Мапа Vetfive" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="<%= content.contacts_map_src %>"></iframe></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-left">
+          <div class="footer-brand">
+            <img src="<%= media.logo %>" alt="<%= content.site_name %>" width="44" height="44" />
+            <div><div class="footer-title"><%= content.site_name %></div><div class="footer-subtitle"><%= content.footer_subtitle %></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <span>© <span id="year"></span> <%= content.site_name %>. Усі права захищено.</span>
+      </div>
+    </footer>
+    <script src="/script.js"></script>
+  </body>
+</html>
