@@ -54,6 +54,30 @@
     });
   }
 
+  // Header behavior: hide on scroll down, show on scroll up
+  const header = document.querySelector(".site-header");
+  if (header) {
+    let lastY = window.scrollY || 0;
+    const minDelta = 6;
+    const topThreshold = 32;
+
+    const onScroll = () => {
+      const y = window.scrollY || 0;
+      const delta = y - lastY;
+      if (Math.abs(delta) < minDelta) return;
+
+      if (y <= topThreshold || delta < 0) {
+        header.classList.remove("site-header--hidden");
+      } else if (delta > 0) {
+        header.classList.add("site-header--hidden");
+      }
+
+      lastY = y;
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 })();

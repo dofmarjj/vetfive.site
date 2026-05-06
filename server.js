@@ -86,6 +86,9 @@ for (const [key, value] of Object.entries(contentDefaults)) {
 db.prepare(
   "INSERT INTO media (media_key, media_path) VALUES (?, ?) ON CONFLICT(media_key) DO NOTHING"
 ).run("logo", "/assets/logo-1.png");
+db.prepare(
+  "INSERT INTO media (media_key, media_path) VALUES (?, ?) ON CONFLICT(media_key) DO NOTHING"
+).run("hero_image", "/assets/logo-1.png");
 
 const seedDoctors = [
   {
@@ -237,7 +240,7 @@ app.get("/", (_req, res) => {
   const media = getMediaMap();
   const doctors = db
     .prepare(
-      "SELECT slug, full_name, doctor_role, avatar_initials, short_description FROM doctors WHERE is_published = 1 ORDER BY id"
+      "SELECT slug, full_name, doctor_role, avatar_initials, short_description, image_path FROM doctors WHERE is_published = 1 ORDER BY id"
     )
     .all();
   res.render("public-index", { content, media, doctors });
@@ -273,18 +276,48 @@ app.post("/admin/logout", requireAuth, (req, res) => {
   req.session.destroy(() => res.redirect("/admin/login"));
 });
 
+function getAdminDoctors() {
+  return db
+    .prepare(
+      `SELECT
+        id, slug, full_name, doctor_role, avatar_initials, short_description, image_path,
+        about_text, education_text, focus_text, reception_text,
+        meta_title, meta_description, is_published
+      FROM doctors
+      ORDER BY id DESC`
+    )
+    .all();
+}
+
+function getAdminUsers() {
+  return db.prepare("SELECT id, email, role, created_at FROM users ORDER BY id").all();
+}
+
 app.get("/admin", requireAuth, (req, res) => {
+  res.redirect("/admin/content");
+});
+
+app.get("/admin/content", requireAuth, (req, res) => {
   const content = getContentMap();
-  const media = getMediaMap();
-  const doctors = db.prepare("SELECT id, slug, full_name, doctor_role, is_published FROM doctors ORDER BY id DESC").all();
-  const users = db.prepare("SELECT id, email, role, created_at FROM users ORDER BY id").all();
-  res.render("admin-dashboard", {
+  res.render("admin-content", {
     user: req.session.user,
-    content,
-    media,
-    doctors,
-    users
+    content
   });
+});
+
+app.get("/admin/media", requireAuth, (req, res) => {
+  const media = getMediaMap();
+  res.render("admin-media", { user: req.session.user, media });
+});
+
+app.get("/admin/doctors", requireAuth, (req, res) => {
+  const doctors = getAdminDoctors();
+  res.render("admin-doctors", { user: req.session.user, doctors });
+});
+
+app.get("/admin/users", requireAuth, requireOwner, (req, res) => {
+  const users = getAdminUsers();
+  res.render("admin-users", { user: req.session.user, users });
 });
 
 app.post("/admin/content", requireAuth, (req, res) => {
@@ -293,62 +326,41 @@ app.post("/admin/content", requireAuth, (req, res) => {
       "INSERT INTO site_content (content_key, content_value) VALUES (?, ?) ON CONFLICT(content_key) DO UPDATE SET content_value = excluded.content_value"
     ).run(key, String(value || ""));
   }
-  res.redirect("/admin");
+  res.redirect("/admin/content");
 });
 
 app.post("/admin/media/logo", requireAuth, upload.single("logo"), (req, res) => {
-  if (!req.file) return res.redirect("/admin");
+  if (!req.file) return res.redirect("/admin/media");
   const logoPath = `/uploads/${req.file.filename}`;
   db.prepare(
     "INSERT INTO media (media_key, media_path) VALUES (?, ?) ON CONFLICT(media_key) DO UPDATE SET media_path = excluded.media_path"
   ).run("logo", logoPath);
-  res.redirect("/admin");
+  res.redirect("/admin/media");
 });
 
-app.post("/admin/doctors", requireAuth, (req, res) => {
+app.post("/admin/media/hero-image", requireAuth, upload.single("hero_image"), (req, res) => {
+  if (!req.file) return res.redirect("/admin/media");
+  const heroImagePath = `/uploads/${req.file.filename}`;
+  db.prepare(
+    "INSERT INTO media (media_key, media_path) VALUES (?, ?) ON CONFLICT(media_key) DO UPDATE SET media_path = excluded.media_path"
+  ).run("hero_image", heroImagePath);
+  res.redirect("/admin/media");
+});
+
+app.post("/admin/doctors", requireAuth, upload.single("image"), (req, res) => {
   const slug = slugify(req.body.slug || req.body.full_name || "", {
     lower: true,
     strict: true,
     locale: "uk"
   });
   if (!slug) return res.status(400).send("Invalid slug");
+  const doctorImagePath = req.file ? `/uploads/${req.file.filename}` : null;
   db.prepare(
     `INSERT INTO doctors (
       slug, full_name, doctor_role, avatar_initials, short_description,
       about_text, education_text, focus_text, reception_text, is_published,
-      meta_title, meta_description
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-  ).run(
-    slug,
-    req.body.full_name || "",
-    req.body.doctor_role || "",
-    req.body.avatar_initials || "",
-    req.body.short_description || "",
-    req.body.about_text || "",
-    req.body.education_text || "",
-    req.body.focus_text || "",
-    req.body.reception_text || "",
-    req.body.is_published ? 1 : 0,
-    req.body.meta_title || "",
-    req.body.meta_description || ""
-  );
-  res.redirect("/admin");
-});
-
-app.post("/admin/doctors/:id", requireAuth, (req, res) => {
-  const doctor = db.prepare("SELECT * FROM doctors WHERE id = ?").get(req.params.id);
-  if (!doctor) return res.status(404).send("Doctor not found");
-  const slug = slugify(req.body.slug || doctor.slug, {
-    lower: true,
-    strict: true,
-    locale: "uk"
-  });
-  db.prepare(
-    `UPDATE doctors
-     SET slug = ?, full_name = ?, doctor_role = ?, avatar_initials = ?, short_description = ?,
-         about_text = ?, education_text = ?, focus_text = ?, reception_text = ?, is_published = ?,
-         meta_title = ?, meta_description = ?, updated_at = CURRENT_TIMESTAMP
-     WHERE id = ?`
+      meta_title, meta_description, image_path
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
   ).run(
     slug,
     req.body.full_name || "",
@@ -362,9 +374,53 @@ app.post("/admin/doctors/:id", requireAuth, (req, res) => {
     req.body.is_published ? 1 : 0,
     req.body.meta_title || "",
     req.body.meta_description || "",
+    doctorImagePath
+  );
+  res.redirect("/admin/doctors");
+});
+
+app.post("/admin/doctors/:id", requireAuth, upload.single("image"), (req, res) => {
+  const doctor = db.prepare("SELECT * FROM doctors WHERE id = ?").get(req.params.id);
+  if (!doctor) return res.status(404).send("Doctor not found");
+  const body = req.body || {};
+  const hasField = (fieldName) => Object.prototype.hasOwnProperty.call(body, fieldName);
+  const fromBodyOrCurrent = (fieldName, currentValue) =>
+    hasField(fieldName) ? String(body[fieldName] ?? "") : currentValue;
+  const slug = slugify(fromBodyOrCurrent("slug", doctor.slug), {
+    lower: true,
+    strict: true,
+    locale: "uk"
+  });
+  db.prepare(
+    `UPDATE doctors
+     SET slug = ?, full_name = ?, doctor_role = ?, avatar_initials = ?, short_description = ?,
+         about_text = ?, education_text = ?, focus_text = ?, reception_text = ?, is_published = ?,
+         meta_title = ?, meta_description = ?, image_path = ?, updated_at = CURRENT_TIMESTAMP
+     WHERE id = ?`
+  ).run(
+    slug,
+    fromBodyOrCurrent("full_name", doctor.full_name),
+    fromBodyOrCurrent("doctor_role", doctor.doctor_role),
+    fromBodyOrCurrent("avatar_initials", doctor.avatar_initials),
+    fromBodyOrCurrent("short_description", doctor.short_description),
+    fromBodyOrCurrent("about_text", doctor.about_text),
+    fromBodyOrCurrent("education_text", doctor.education_text),
+    fromBodyOrCurrent("focus_text", doctor.focus_text),
+    fromBodyOrCurrent("reception_text", doctor.reception_text),
+    hasField("is_published") ? 1 : 0,
+    fromBodyOrCurrent("meta_title", doctor.meta_title),
+    fromBodyOrCurrent("meta_description", doctor.meta_description),
+    req.file ? `/uploads/${req.file.filename}` : doctor.image_path,
     req.params.id
   );
-  res.redirect("/admin");
+  res.redirect("/admin/doctors");
+});
+
+app.post("/admin/doctors/:id/delete", requireAuth, (req, res) => {
+  const doctor = db.prepare("SELECT id FROM doctors WHERE id = ?").get(req.params.id);
+  if (!doctor) return res.status(404).send("Doctor not found");
+  db.prepare("DELETE FROM doctors WHERE id = ?").run(req.params.id);
+  res.redirect("/admin/doctors");
 });
 
 app.post("/admin/users", requireAuth, requireOwner, (req, res) => {
@@ -378,7 +434,7 @@ app.post("/admin/users", requireAuth, requireOwner, (req, res) => {
     hash,
     role
   );
-  res.redirect("/admin");
+  res.redirect("/admin/users");
 });
 
 app.listen(port, () => {

@@ -23,18 +23,56 @@
         <section class="section section--alt">
           <div class="section-head">
             <h2>Тексти сайту</h2>
+            <p>Редагуйте контент блоків без технічних ключів.</p>
           </div>
           <div class="contact-card contact-card--form">
+            <%
+              const contentFieldLabels = {
+                site_name: "Назва клініки",
+                hero_kicker: "Підзаголовок Hero",
+                hero_title: "Головний заголовок Hero",
+                hero_subtitle: "Опис Hero",
+                about_title: "Заголовок блоку Про нас",
+                about_text: "Текст блоку Про нас",
+                contacts_phone: "Телефон (відображення)",
+                contacts_phone_link: "Телефон (для посилання tel:)",
+                contacts_email: "Email",
+                contacts_hours: "Графік роботи",
+                contacts_map_src: "Посилання на карту (iframe src)",
+                footer_subtitle: "Підпис у футері"
+              };
+              const contentFieldGroups = [
+                {
+                  title: "Шапка та Hero",
+                  keys: ["site_name", "hero_kicker", "hero_title", "hero_subtitle"]
+                },
+                {
+                  title: "Блок Про нас",
+                  keys: ["about_title", "about_text"]
+                },
+                {
+                  title: "Контакти",
+                  keys: ["contacts_phone", "contacts_phone_link", "contacts_email", "contacts_hours", "contacts_map_src"]
+                },
+                {
+                  title: "Футер",
+                  keys: ["footer_subtitle"]
+                }
+              ];
+            %>
             <form class="form" action="/admin/content" method="post">
-              <% Object.entries(content).forEach(([key, value]) => { %>
+              <% contentFieldGroups.forEach((group) => { %>
+              <h3 style="margin-top: 8px"><%= group.title %></h3>
+              <% group.keys.forEach((key) => { const value = content[key] || ""; %>
               <label class="field">
-                <span class="field-label"><%= key %></span>
+                <span class="field-label"><%= contentFieldLabels[key] || key %></span>
                 <% if ((value || "").length > 90) { %>
                 <textarea name="<%= key %>" rows="3"><%= value %></textarea>
                 <% } else { %>
                 <input name="<%= key %>" type="text" value="<%= value %>" />
                 <% } %>
               </label>
+              <% }) %>
               <% }) %>
               <button class="btn btn-primary" type="submit">Зберегти тексти</button>
             </form>
@@ -64,11 +102,12 @@
           </div>
           <div class="contact-card contact-card--form">
             <h3>Додати лікаря</h3>
-            <form class="form" action="/admin/doctors" method="post">
+            <form class="form" action="/admin/doctors" method="post" enctype="multipart/form-data">
               <label class="field"><span class="field-label">ПІБ</span><input name="full_name" required /></label>
               <label class="field"><span class="field-label">Slug (опц.)</span><input name="slug" /></label>
               <label class="field"><span class="field-label">Роль</span><input name="doctor_role" required /></label>
               <label class="field"><span class="field-label">Ініціали</span><input name="avatar_initials" required /></label>
+              <label class="field"><span class="field-label">Фото лікаря</span><input name="image" type="file" accept="image/*" /></label>
               <label class="field"><span class="field-label">Короткий опис</span><textarea name="short_description" rows="2" required></textarea></label>
               <label class="field"><span class="field-label">Про фахівця</span><textarea name="about_text" rows="3" required></textarea></label>
               <label class="field"><span class="field-label">Освіта/досвід</span><textarea name="education_text" rows="3" required></textarea></label>
@@ -84,12 +123,28 @@
           <% doctors.forEach((doctor) => { %>
           <div class="contact-card contact-card--form" style="margin-top: 16px">
             <h3><%= doctor.full_name %> (<%= doctor.slug %>)</h3>
-            <form class="form" action="/admin/doctors/<%= doctor.id %>" method="post">
+            <form class="form" action="/admin/doctors/<%= doctor.id %>" method="post" enctype="multipart/form-data">
               <label class="field"><span class="field-label">ПІБ</span><input name="full_name" value="<%= doctor.full_name %>" required /></label>
               <label class="field"><span class="field-label">Slug</span><input name="slug" value="<%= doctor.slug %>" required /></label>
               <label class="field"><span class="field-label">Роль</span><input name="doctor_role" value="<%= doctor.doctor_role %>" required /></label>
+              <label class="field"><span class="field-label">Ініціали</span><input name="avatar_initials" value="<%= doctor.avatar_initials || '' %>" required /></label>
+              <% if (doctor.image_path) { %>
+              <p style="margin: 0">Поточне фото:</p>
+              <img src="<%= doctor.image_path %>" alt="<%= doctor.full_name %>" width="72" height="72" style="border-radius: 10px; object-fit: cover" />
+              <% } %>
+              <label class="field"><span class="field-label">Нове фото лікаря</span><input name="image" type="file" accept="image/*" /></label>
+              <label class="field"><span class="field-label">Короткий опис</span><textarea name="short_description" rows="2" required><%= doctor.short_description || '' %></textarea></label>
+              <label class="field"><span class="field-label">Про фахівця</span><textarea name="about_text" rows="3" required><%= doctor.about_text || '' %></textarea></label>
+              <label class="field"><span class="field-label">Освіта/досвід</span><textarea name="education_text" rows="3" required><%= doctor.education_text || '' %></textarea></label>
+              <label class="field"><span class="field-label">Напрями</span><textarea name="focus_text" rows="3" required><%= doctor.focus_text || '' %></textarea></label>
+              <label class="field"><span class="field-label">Прийом</span><textarea name="reception_text" rows="2" required><%= doctor.reception_text || '' %></textarea></label>
+              <label class="field"><span class="field-label">Meta title</span><input name="meta_title" value="<%= doctor.meta_title || '' %>" /></label>
+              <label class="field"><span class="field-label">Meta description</span><textarea name="meta_description" rows="2"><%= doctor.meta_description || '' %></textarea></label>
               <label class="field"><input name="is_published" type="checkbox" <%= doctor.is_published ? "checked" : "" %> /> Опубліковано</label>
               <button class="btn btn-ghost" type="submit">Оновити</button>
+            </form>
+            <form action="/admin/doctors/<%= doctor.id %>/delete" method="post" onsubmit="return confirm('Видалити цього лікаря? Цю дію не можна скасувати.');" style="margin-top: 10px">
+              <button class="btn btn-ghost" type="submit" style="border-color: #b3261e; color: #b3261e">Видалити лікаря</button>
             </form>
           </div>
           <% }) %>

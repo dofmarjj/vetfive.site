@@ -221,14 +221,25 @@ body {
 
 /* ——— Header ——— */
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 50;
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.68) 100%);
   border-bottom: 1px solid rgba(22, 61, 50, 0.07);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset;
+  transition: transform 0.22s ease;
+}
+
+.site-header.site-header--hidden {
+  transform: translateY(-100%);
+}
+
+.site-header + main {
+  padding-top: 76px;
 }
 
 .header-inner {
@@ -456,6 +467,17 @@ body {
 
 .hero-content {
   padding: 4px 0;
+}
+
+.hero-media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-media__image {
+  width: min(320px, 100%);
+  object-fit: cover;
 }
 
 .hero-kicker {
@@ -890,7 +912,7 @@ section[id] {
   margin: 0;
   color: var(--muted);
   font-weight: 500;
-  max-width: 62ch;
+  max-width: 65ch;
   font-size: 17px;
 }
 
@@ -1189,6 +1211,11 @@ section[id] {
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset;
 }
 
+.doctor-avatar--image {
+  display: block;
+  object-fit: cover;
+}
+
 .doctor-name {
   margin-top: 14px;
   font-weight: 700;
@@ -1384,6 +1411,7 @@ iframe {
 
 /* ——— Сторінка профілю лікаря ——— */
 .profile-page {
+  height: 100vh;
   padding: 24px 0 clamp(48px, 8vw, 80px);
 }
 
@@ -1448,6 +1476,11 @@ iframe {
   font-size: 30px;
   color: var(--green-800);
   box-shadow: 0 2px 8px rgba(15, 45, 36, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.profile-avatar--image {
+  display: block;
+  object-fit: cover;
 }
 
 .profile-name {
@@ -1658,6 +1691,42 @@ iframe {
 }
 
 @media (max-width: 980px) {
+  .nav {
+    display: none;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .header-inner {
+    padding: 12px 0;
+  }
+
+  .nav.nav--open {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .nav.nav--open a {
+    border-radius: 12px;
+  }
+
+  .nav.nav--open a::after {
+    display: none;
+  }
+
   .hero-inner--text-first,
   .hero-inner--visual-first {
     grid-template-columns: 1fr;
@@ -1700,42 +1769,6 @@ iframe {
 }
 
 @media (max-width: 720px) {
-  .nav {
-    display: none;
-  }
-
-  .nav-toggle {
-    display: inline-flex;
-  }
-
-  .header-inner {
-    padding: 12px 0;
-  }
-
-  .nav.nav--open {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 4px;
-    position: absolute;
-    top: calc(100% + 10px);
-    left: 0;
-    right: 0;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.96);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-  }
-
-  .nav.nav--open a {
-    border-radius: 12px;
-  }
-
-  .nav.nav--open a::after {
-    display: none;
-  }
-
   .hero-actions {
     flex-direction: column;
     align-items: stretch;
@@ -1765,4 +1798,47 @@ iframe {
   .footer-right {
     justify-content: flex-start;
   }
+}
+
+/* --- Admin pages --- */
+.admin-page .btn-ghost {
+  background: #ffffff;
+  border-color: var(--border-strong);
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+
+.admin-page .btn-ghost:hover {
+  background: rgba(42, 107, 82, 0.08);
+  border-color: rgba(42, 107, 82, 0.25);
+}
+
+.admin-page .contact-actions {
+  gap: 10px;
+}
+
+.admin-page .contact-actions .btn {
+  min-width: 120px;
+}
+
+.admin-page textarea,
+.admin-page select {
+  width: 100%;
+  padding: 13px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(22, 61, 50, 0.12);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(252, 253, 252, 1));
+  outline: none;
+  font-weight: 600;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 15px;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  box-shadow: 0 1px 2px rgba(15, 45, 36, 0.04) inset;
+}
+
+.admin-page textarea:focus,
+.admin-page select:focus {
+  border-color: rgba(196, 168, 96, 0.75);
+  box-shadow: 0 0 0 4px var(--ring);
 }

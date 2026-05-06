@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Адмінка: Користувачі | Vetfive</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="admin-page">
+    <main class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Адмінка</span>
+          <h1>Користувачі</h1>
+          <div class="contact-actions">
+            <a class="btn btn-ghost" href="/admin/content">Контент</a>
+            <a class="btn btn-ghost" href="/admin/media">Медіа</a>
+            <a class="btn btn-ghost" href="/admin/doctors">Лікарі</a>
+            <a class="btn btn-primary" href="/admin/users">Користувачі</a>
+          </div>
+          <form action="/admin/logout" method="post"><button class="btn btn-ghost" type="submit">Вийти</button></form>
+        </div>
+
+        <% if (user.role !== "owner") { %>
+        <div class="contact-card"><p>Доступ до цього розділу має тільки власник (owner).</p></div>
+        <% } else { %>
+        <div class="contact-card contact-card--form">
+          <h3>Додати адміністратора</h3>
+          <form class="form" action="/admin/users" method="post">
+            <label class="field"><span class="field-label">Email</span><input name="email" type="email" required /></label>
+            <label class="field"><span class="field-label">Пароль</span><input name="password" type="password" required /></label>
+            <label class="field">
+              <span class="field-label">Роль</span>
+              <select name="role">
+                <option value="editor">editor</option>
+                <option value="owner">owner</option>
+              </select>
+            </label>
+            <button class="btn btn-primary" type="submit">Створити користувача</button>
+          </form>
+        </div>
+        <div class="contact-card">
+          <h3>Поточні користувачі</h3>
+          <% users.forEach((u) => { %><p><strong><%= u.email %></strong> — <%= u.role %></p><% }) %>
+        </div>
+        <% } %>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Адмінка: Медіа | Vetfive</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="admin-page">
+    <main class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Адмінка</span>
+          <h1>Медіа</h1>
+          <div class="contact-actions">
+            <a class="btn btn-ghost" href="/admin/content">Контент</a>
+            <a class="btn btn-primary" href="/admin/media">Медіа</a>
+            <a class="btn btn-ghost" href="/admin/doctors">Лікарі</a>
+            <% if (user.role === "owner") { %><a class="btn btn-ghost" href="/admin/users">Користувачі</a><% } %>
+          </div>
+          <form action="/admin/logout" method="post"><button class="btn btn-ghost" type="submit">Вийти</button></form>
+        </div>
+
+        <div class="contact-card">
+          <p>Поточний логотип:</p>
+          <img src="<%= media.logo %>" alt="Logo" width="64" height="64" />
+          <form class="form" action="/admin/media/logo" method="post" enctype="multipart/form-data">
+            <label class="field">
+              <span class="field-label">Новий логотип</span>
+              <input name="logo" type="file" accept="image/*" required />
+            </label>
+            <button class="btn btn-primary" type="submit">Замінити логотип</button>
+          </form>
+        </div>
+
+        <div class="contact-card" style="margin-top: 16px">
+          <p>Картинка Hero (праворуч у першому блоці):</p>
+          <img src="<%= media.hero_image %>" alt="Hero image" width="160" height="90" style="object-fit: cover; border-radius: 10px" />
+          <form class="form" action="/admin/media/hero-image" method="post" enctype="multipart/form-data">
+            <label class="field">
+              <span class="field-label">Нова картинка Hero</span>
+              <input name="hero_image" type="file" accept="image/*" required />
+            </label>
+            <button class="btn btn-primary" type="submit">Замінити картинку Hero</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

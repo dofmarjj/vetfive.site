@@ -27,21 +27,34 @@
           <img class="brand-logo" src="<%= media.logo %>" alt="Vetfive" width="42" height="42" />
           <span class="brand-title">Vetfive</span>
         </a>
+        <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false">
+          <span class="nav-toggle-icon" aria-hidden="true">☰</span>
+          <span class="nav-toggle-label">Меню</span>
+        </button>
+        <nav id="site-nav" class="nav" aria-label="Головна навігація">
+          <a href="/#about">Про нас</a>
+          <a href="/#doctors">Фахівці</a>
+          <a href="/#contact">Контакти</a>
+        </nav>
       </div>
     </header>
 
     <main id="main" class="profile-page">
       <div class="container">
         <nav class="breadcrumb" aria-label="Навігація по сайту">
-          <a href="/">Головна</a><span class="breadcrumb-sep" aria-hidden="true">/</span><a href="/#doctors">Лікарі</a><span class="breadcrumb-sep" aria-hidden="true">/</span><span class="breadcrumb-current"><%= doctor.full_name %></span>
+          <a href="/">Головна</a><span class="breadcrumb-sep" aria-hidden="true">/</span><a href="/#doctors">Фахівці</a><span class="breadcrumb-sep" aria-hidden="true">/</span><span class="breadcrumb-current"><%= doctor.full_name %></span>
         </nav>
         <div class="profile-layout">
           <aside class="profile-aside">
+            <% if (doctor.image_path) { %>
+            <img class="profile-avatar profile-avatar--image" src="<%= doctor.image_path %>" alt="<%= doctor.full_name %>" />
+            <% } else { %>
             <div class="profile-avatar" aria-hidden="true"><%= doctor.avatar_initials %></div>
+            <% } %>
             <h1 class="profile-name"><%= doctor.full_name %></h1>
             <p class="profile-role"><%= doctor.doctor_role %></p>
             <a class="btn btn-primary profile-cta" href="/#contact">Записатися на прийом</a>
-            <a class="profile-back" href="/#doctors">← Усі лікарі</a>
+            <a class="profile-back" href="/#doctors">← Усі фахівці</a>
           </aside>
           <div class="profile-content">
             <section><h2>Про фахівця</h2><p><%= doctor.about_text %></p></section>

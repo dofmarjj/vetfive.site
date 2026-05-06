@@ -29,8 +29,12 @@
           <img class="brand-logo" src="<%= media.logo %>" alt="<%= content.site_name %>" width="42" height="42" />
           <span class="brand-title"><%= content.site_name %></span>
         </a>
+        <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false">
+          <span class="nav-toggle-icon" aria-hidden="true">☰</span>
+          <span class="nav-toggle-label">Меню</span>
+        </button>
         <nav id="site-nav" class="nav" aria-label="Головна навігація">
-          <a href="#about">Про нас</a><a href="#doctors">Лікарі</a><a href="#contact">Контакти</a>
+          <a href="#about">Про нас</a><a href="#doctors">Фахівці</a><a href="#contact">Контакти</a>
         </nav>
       </div>
     </header>
@@ -48,6 +52,9 @@
                   <a class="btn btn-primary" href="#contact">Записатися на прийом</a>
                   <a class="btn btn-ghost" href="#doctors">Знайомимось із лікарями</a>
                 </div>
+              </div>
+              <div class="hero-media" aria-hidden="true">
+                <img class="hero-media__image" src="<%= media.hero_image %>" alt="" />
               </div>
             </div>
           </div>
@@ -68,13 +75,17 @@
         <div class="container">
           <div class="section-head">
             <span class="eyebrow">Команда</span>
-            <h2>Лікарі</h2>
+            <h2>Фахівці</h2>
             <p>Натисніть картку, щоб відкрити повний профіль лікаря.</p>
           </div>
           <div class="doctors-grid">
             <% doctors.forEach((doctor) => { %>
             <a class="doctor-card doctor-card--link" href="/doctors/<%= doctor.slug %>">
+              <% if (doctor.image_path) { %>
+              <img class="doctor-avatar doctor-avatar--image" src="<%= doctor.image_path %>" alt="<%= doctor.full_name %>" />
+              <% } else { %>
               <div class="doctor-avatar"><%= doctor.avatar_initials %></div>
+              <% } %>
               <div class="doctor-name"><%= doctor.full_name %></div>
               <div class="doctor-role"><%= doctor.doctor_role %></div>
               <p class="doctor-desc"><%= doctor.short_description %></p>

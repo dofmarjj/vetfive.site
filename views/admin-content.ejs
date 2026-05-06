@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Адмінка: Контент | Vetfive</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="admin-page">
+    <main class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Адмінка</span>
+          <h1>Контент сайту</h1>
+          <p>Ви увійшли як <strong><%= user.email %></strong> (<%= user.role %>).</p>
+          <div class="contact-actions">
+            <a class="btn btn-primary" href="/admin/content">Контент</a>
+            <a class="btn btn-ghost" href="/admin/media">Медіа</a>
+            <a class="btn btn-ghost" href="/admin/doctors">Лікарі</a>
+            <% if (user.role === "owner") { %><a class="btn btn-ghost" href="/admin/users">Користувачі</a><% } %>
+          </div>
+          <form action="/admin/logout" method="post"><button class="btn btn-ghost" type="submit">Вийти</button></form>
+        </div>
+
+        <div class="contact-card contact-card--form">
+          <%
+            const contentFieldLabels = {
+              site_name: "Назва клініки",
+              hero_kicker: "Підзаголовок Hero",
+              hero_title: "Головний заголовок Hero",
+              hero_subtitle: "Опис Hero",
+              about_title: "Заголовок блоку Про нас",
+              about_text: "Текст блоку Про нас",
+              contacts_phone: "Телефон (відображення)",
+              contacts_phone_link: "Телефон (для посилання tel:)",
+              contacts_email: "Email",
+              contacts_hours: "Графік роботи",
+              contacts_map_src: "Посилання на карту (iframe src)",
+              footer_subtitle: "Підпис у футері"
+            };
+            const contentFieldGroups = [
+              { title: "Шапка та Hero", keys: ["site_name", "hero_kicker", "hero_title", "hero_subtitle"] },
+              { title: "Блок Про нас", keys: ["about_title", "about_text"] },
+              { title: "Контакти", keys: ["contacts_phone", "contacts_phone_link", "contacts_email", "contacts_hours", "contacts_map_src"] },
+              { title: "Футер", keys: ["footer_subtitle"] }
+            ];
+          %>
+          <form class="form" action="/admin/content" method="post">
+            <% contentFieldGroups.forEach((group) => { %>
+            <h3 style="margin-top: 8px"><%= group.title %></h3>
+            <% group.keys.forEach((key) => { const value = content[key] || ""; %>
+            <label class="field">
+              <span class="field-label"><%= contentFieldLabels[key] || key %></span>
+              <% if ((value || "").length > 90) { %>
+              <textarea name="<%= key %>" rows="3"><%= value %></textarea>
+              <% } else { %>
+              <input name="<%= key %>" type="text" value="<%= value %>" />
+              <% } %>
+            </label>
+            <% }) %>
+            <% }) %>
+            <button class="btn btn-primary" type="submit">Зберегти тексти</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
