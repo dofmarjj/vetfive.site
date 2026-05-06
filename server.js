@@ -175,7 +175,11 @@ app.use(
     saveUninitialized: false
   })
 );
-app.use(express.static(rootDir));
+app.use(
+  express.static(rootDir, {
+    index: false
+  })
+);
 app.use("/uploads", express.static(uploadsDir));
 
 const storage = multer.diskStorage({
@@ -214,6 +218,19 @@ function requireOwner(req, res, next) {
   }
   next();
 }
+
+app.get("/index.html", (_req, res) => {
+  res.redirect(302, "/");
+});
+
+app.get("/poslugy.html", (_req, res) => {
+  res.redirect(302, "/");
+});
+
+app.get(/^\/doctors\/(.+)\.html$/, (req, res) => {
+  const legacySlug = req.params[0];
+  res.redirect(302, `/doctors/${legacySlug}`);
+});
 
 app.get("/", (_req, res) => {
   const content = getContentMap();

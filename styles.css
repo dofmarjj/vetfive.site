@@ -251,6 +251,14 @@ body {
   color: inherit;
 }
 
+.brand-logo {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
 /* Шапка: компактний знак замість повноцінного PNG-логотипу */
 .brand-mark {
   flex-shrink: 0;
@@ -280,6 +288,11 @@ body {
 }
 
 @media (max-width: 720px) {
+  .brand-logo {
+    width: 38px;
+    height: 38px;
+  }
+
   .brand-mark {
     width: 38px;
     height: 38px;

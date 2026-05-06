@@ -34,10 +34,12 @@ npm start
 ```
 
 Після запуску:
+
 - Публічний сайт: `http://localhost:3000/`
 - Адмінка: `http://localhost:3000/admin/login`
 
 Стартовий owner-користувач (створюється автоматично, якщо БД порожня):
+
 - Email: `owner@vetfive.local`
 - Password: `vetfive123`
 
@@ -59,3 +61,5 @@ tar -czf "backups/vetfive-$(date +%Y%m%d-%H%M).tar.gz" data uploads
 - Додати restart policy через `pm2` або `systemd`
 - Налаштувати регулярні бекапи `data/` та `uploads/`
 - Обмежити доступ до `/admin/*` за потреби (IP allowlist/VPN)
+
+Тестовый вход: owner@vetfive.local / vetfive123

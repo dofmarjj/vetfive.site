@@ -25,7 +25,10 @@
 
     <header class="site-header">
       <div class="container header-inner header-inner--relative">
-        <a class="brand" href="/"><span class="brand-mark">V</span><span class="brand-title"><%= content.site_name %></span></a>
+        <a class="brand" href="/">
+          <img class="brand-logo" src="<%= media.logo %>" alt="<%= content.site_name %>" width="42" height="42" />
+          <span class="brand-title"><%= content.site_name %></span>
+        </a>
         <nav id="site-nav" class="nav" aria-label="Головна навігація">
           <a href="#about">Про нас</a><a href="#doctors">Лікарі</a><a href="#contact">Контакти</a>
         </nav>
@@ -87,6 +90,10 @@
           <div class="section-head">
             <span class="eyebrow">Зв’язок</span>
             <h2>Контакти</h2>
+            <p>
+              Напишіть або зателефонуйте — ми підкажемо, як підготуватися до
+              візиту і запишемо на прийом.
+            </p>
           </div>
           <div class="contact-grid">
             <div class="contact-card">
@@ -94,6 +101,35 @@
               <div class="contact-item"><div class="contact-label">Телефон</div><a class="contact-link" href="tel:<%= content.contacts_phone_link %>"><%= content.contacts_phone %></a></div>
               <div class="contact-item"><div class="contact-label">Email</div><a class="contact-link" href="mailto:<%= content.contacts_email %>"><%= content.contacts_email %></a></div>
               <div class="contact-item"><div class="contact-label">Графік</div><div><%= content.contacts_hours %></div></div>
+              <div class="contact-actions">
+                <a class="btn btn-primary" href="#contact-form">Заявка на запис</a>
+                <a class="btn btn-ghost" href="#map">Побачити на мапі</a>
+              </div>
+            </div>
+            <div class="contact-card contact-card--form" id="contact-form">
+              <h3>Швидка заявка</h3>
+              <form class="form" action="#" method="post">
+                <label class="field">
+                  <span class="field-label">Ваше ім’я</span>
+                  <input name="name" type="text" placeholder="Напр., Оксана" autocomplete="name" required />
+                </label>
+                <label class="field">
+                  <span class="field-label">Телефон</span>
+                  <input name="phone" type="tel" placeholder="+38 (___) ___-__-__" autocomplete="tel" required />
+                </label>
+                <label class="field">
+                  <span class="field-label">Кого турбує?</span>
+                  <input name="pet" type="text" placeholder="Кіт / Пес, вік, симптоми" required />
+                </label>
+                <label class="field">
+                  <span class="field-label">Зручний день/час</span>
+                  <input name="time" type="text" placeholder="Напр., Пн після 15:00" />
+                </label>
+                <button class="btn btn-primary btn-full" type="submit">Надіслати</button>
+                <p class="form-note">
+                  Заповніть дані, щоб ми могли зв’язатися з вами та уточнити деталі.
+                </p>
+              </form>
             </div>
             <div class="contact-map" id="map">
               <h3>Місце</h3>
